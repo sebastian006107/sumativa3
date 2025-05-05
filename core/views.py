@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Juego
-from .forms import JuegoForm
+from .forms import JuegoForm, EditarUsuarioForm, RegistroForm
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 
@@ -12,6 +13,8 @@ def listar_juegos(request):
   return render(request, "core/listar.html", {'juegos' : juegos})
 
 
+
+@staff_member_required
 @login_required
 def crear_juego(request):
     form = JuegoForm(request.POST or None)
@@ -21,6 +24,9 @@ def crear_juego(request):
     return render(request, 'core/crear.html', {'form': form})
 
 
+
+
+@staff_member_required
 @login_required
 def editar_juego(request, pk):
     juego = get_object_or_404(Juego, pk=pk)
@@ -30,6 +36,9 @@ def editar_juego(request, pk):
         return redirect('listar_juegos')
     return render(request, 'core/editar.html', {'form': form})
 
+
+
+@staff_member_required
 @login_required
 def eliminar_juego(request, pk):
     juego = get_object_or_404(Juego, pk=pk)
