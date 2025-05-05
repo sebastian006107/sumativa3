@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views  import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
+from .views import JuegoListCreateAPIView, JuegoRetrieveUpdateDestroyAPIView
 
 urlpatterns = [
     path('', views.listar_juegos, name='listar_juegos'),
@@ -12,4 +13,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name= 'logout'),
     path('registro/', views.registro_usuario, name='registro'),
     path('perfil/', views.editar_perfil, name='editar_perfil'),
+    
+    #api rest
+    path('api/juegos/', JuegoListCreateAPIView.as_view(), name='api_juegos'),
+    path('api/juegos/<int:pk>/', JuegoRetrieveUpdateDestroyAPIView.as_view(), name='api_juego_detail'),
 ]
