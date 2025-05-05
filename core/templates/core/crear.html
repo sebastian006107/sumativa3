@@ -1,0 +1,12 @@
+{% extends 'core/base_generic.html' %}
+{% block title %}Añadir Nuevo Juego{% endblock %}
+
+{% block content %}
+<h2>Añadir Nuevo Juego</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="{% url 'listar_juegos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
