@@ -101,3 +101,23 @@ def editar_perfil(request):
 
 
 
+
+
+
+#apirest
+
+# apirest
+from rest_framework import generics
+from .models import Juego
+from .serializers import JuegoSerializer
+
+class JuegoListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Juego.objects.all()
+    serializer_class = JuegoSerializer
+
+
+
+
+class JuegoRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Juego.objects.all()
+    serializer_class = JuegoSerializer
