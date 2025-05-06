@@ -1,0 +1,46 @@
+{% extends 'core/base_generic.html' %}
+{% block title %}Ofertas Especiales{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ titulo }}</h2>
+    
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% else %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for oferta in ofertas %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if oferta.thumb %}
+                            <img src="{{ oferta.thumb }}" class="card-img-top" alt="{{ oferta.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ oferta.title }}</h5>
+                            <p class="card-text">
+                                <span class="text-danger fw-bold">${{ oferta.salePrice }}</span>
+                                {% if oferta.normalPrice %}
+                                    <span class="text-muted text-decoration-line-through">${{ oferta.normalPrice }}</span>
+                                {% endif %}
+                            </p>
+                            <p>Descuento: {{ oferta.savings|floatformat:0 }}%</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="https://www.cheapshark.com/redirect?dealID={{ oferta.dealID }}" 
+                               class="btn btn-primary" target="_blank">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        No se encontraron ofertas disponibles.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

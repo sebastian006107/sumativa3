@@ -17,4 +17,8 @@ urlpatterns = [
     #api rest
     path('api/juegos/', JuegoListCreateAPIView.as_view(), name='api_juegos'),
     path('api/juegos/<int:pk>/', JuegoRetrieveUpdateDestroyAPIView.as_view(), name='api_juego_detail'),
+
+
+    #consumir api
+    path('ofertas/', views.ofertas_view, name='ofertas'),
 ]

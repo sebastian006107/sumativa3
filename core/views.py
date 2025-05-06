@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Juego
 from .forms import JuegoForm, EditarUsuarioForm, RegistroForm
 from django.contrib.admin.views.decorators import staff_member_required
+import requests
 
 # Create your views here.
 
@@ -121,3 +122,43 @@ class JuegoListCreateAPIView(generics.ListCreateAPIView):
 class JuegoRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Juego.objects.all()
     serializer_class = JuegoSerializer
+
+
+
+
+
+
+
+    #CONSUMIR APIS
+@login_required
+def ofertas_view(request):
+    """
+    Vista que consume una API externa para mostrar ofertas de juegos.
+    Requiere inicio de sesión.
+    """
+    try:
+
+        api_url = "https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15"
+        response = requests.get(api_url, timeout=10)
+        
+        if response.status_code == 200:
+            ofertas = response.json()
+            
+            ofertas = ofertas[:10] if len(ofertas) > 10 else ofertas
+            
+            context = {
+                'ofertas': ofertas,
+                'titulo': 'Ofertas Especiales'
+            }
+        else:
+            context = {
+                'error': f'Error al obtener ofertas: {response.status_code}',
+                'titulo': 'Ofertas Especiales'
+            }
+    except requests.exceptions.RequestException as e:
+        context = {
+            'error': f'No se pudo conectar a la API: {str(e)}',
+            'titulo': 'Ofertas Especiales'
+        }
+    
+    return render(request, 'core/ofertas.html', context)
