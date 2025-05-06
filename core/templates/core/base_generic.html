@@ -37,6 +37,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'listar_juegos' %}"><i class="bi bi-grid"></i> Catálogo</a>
                     </li>
+>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ofertas' %}"><i class="bi bi-tags"></i> Ofertas</a>
+                    </li>
                     {% if user.is_superuser %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'crear_juego' %}"><i class="bi bi-plus-circle"></i> Añadir Juego</a>
@@ -54,6 +58,10 @@
                         </form>
                     </li>
                 {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ofertas' %}"><i class="bi bi-tags"></i> Ofertas</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a>
                     </li>
